@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chili Sweat</title>
+<meta name="description" content="Chili Sweat: poleras Heat y shorts Sprint en varios colores, ropa técnica para entrenar con calor. Hecho en Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0c;--ink:#f1efec;--mute:#8d8a86;--red:#b3121b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{color:var(--ink);font-family:"Inter","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* artboard 1500x1000 escalado para encajar */
+#art{position:absolute;left:0;top:0;width:1500px;height:1000px;transform-origin:0 0;
+  background:radial-gradient(ellipse 70% 55% at 50% 40%,#18181a,var(--bg))}
+
+.ui{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.pill{height:34px;padding:0 20px;border:1px solid rgba(241,239,236,.6);border-radius:40px;display:inline-grid;place-items:center;transition:background .25s,color .25s}
+.pill:hover{background:var(--ink);color:var(--bg)}
+
+/* lavado al abrir el detalle */
+.dim{transition:opacity .7s cubic-bezier(.2,.8,.2,1),filter .7s}
+body.open .dim{opacity:.12;filter:blur(2px)}
+body.open .dimmer{opacity:0;pointer-events:none}
+
+/* cabecera */
+#about{position:absolute;left:46px;top:46px}
+#contact{position:absolute;right:46px;top:46px}
+#logo{position:absolute;left:50%;top:16px;height:80px;width:auto;transform:translateX(-50%);-webkit-user-drag:none;pointer-events:none}
+
+/* riel cromada */
+#rail{position:absolute;left:150px;right:150px;top:254px;height:12px;border-radius:6px;
+  background:linear-gradient(180deg,#fafafa 0%,#b9bcc1 28%,#5d6066 55%,#a9adb3 78%,#e6e7e9 100%);
+  box-shadow:0 10px 18px rgba(0,0,0,.45)}
+#rail::before,#rail::after{content:"";position:absolute;top:-9px;width:16px;height:30px;border-radius:5px;
+  background:linear-gradient(90deg,#8d9096,#f3f3f4 45%,#7a7d83)}
+#rail::before{left:-14px}
+#rail::after{right:-14px}
+
+/* prendas colgadas, de canto en 3D */
+#rack{position:absolute;left:0;top:0;width:1500px;height:1000px}
+.g{position:absolute;top:236px;width:289px;height:300px;margin-left:-144.5px;perspective:900px;cursor:pointer;
+  transition:left .75s cubic-bezier(.2,.8,.2,1)}
+.g i{position:absolute;inset:0;background-repeat:no-repeat;background-size:contain;background-position:center;
+  transform-origin:50% 4%;transform:rotateY(-74deg);
+  filter:brightness(.82) drop-shadow(0 18px 18px rgba(0,0,0,.5));
+  transition:transform .75s cubic-bezier(.2,.8,.2,1),filter .75s}
+.g.face i{transform:rotateY(0deg);filter:brightness(1) drop-shadow(0 22px 26px rgba(0,0,0,.55))}
+
+/* leyenda bajo la prenda enfrentada */
+#cap{position:absolute;top:552px;left:750px;transform:translateX(-50%);text-align:center;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap;pointer-events:none;opacity:0;
+  transition:left .75s cubic-bezier(.2,.8,.2,1),opacity .35s}
+#cap.on{opacity:1}
+body.open #cap{opacity:0}
+#cap b{display:block;color:var(--ink);font-weight:500;margin-bottom:4px}
+
+#avail{position:absolute;left:50%;top:790px;transform:translateX(-50%);
+  transition:background .25s,color .25s,opacity .7s cubic-bezier(.2,.8,.2,1),filter .7s}
+
+/* banda roja */
+#band{position:absolute;left:0;right:0;bottom:0;height:46px;background:var(--red);overflow:hidden;display:flex;align-items:center}
+#band div{display:flex;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:.14em;animation:mq 22s linear infinite}
+#band span{padding-right:22px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* capa de detalle */
+#det{position:absolute;inset:0;pointer-events:none}
+body.open #det{pointer-events:auto}
+.hit{position:absolute;inset:0}
+#big2,#big{position:absolute;left:50%;top:244px;width:473px;height:492px;margin-left:-236.5px;
+  background-repeat:no-repeat;background-size:contain;background-position:center;opacity:0}
+#big2{pointer-events:none}
+#big{transform-origin:50% 4%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+.arr{position:absolute;top:452px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(241,239,236,.5);
+  display:grid;place-items:center;opacity:0;transition:opacity .4s .25s,background .2s,color .2s}
+.arr:hover{background:var(--ink);color:var(--bg)}
+#prev{left:calc(50% - 300px)}
+#next{left:calc(50% + 254px)}
+.arr svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+#info{position:absolute;left:50%;top:770px;transform:translateX(-50%);text-align:center;opacity:0;transition:opacity .5s .25s}
+#num{font-size:11px;letter-spacing:.16em;color:var(--mute)}
+#name{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;font-size:40px;line-height:1.15;color:var(--ink);margin:8px 0 6px}
+#price{font-size:13px;letter-spacing:.08em;color:var(--mute);margin-bottom:18px}
+#close{position:absolute;right:46px;top:46px;opacity:0;transition:opacity .4s .25s}
+body.open #info,body.open .arr,body.open #close{opacity:1}
+body.open .arr,body.open #close{pointer-events:auto}
+</style>
+</head>
+<body>
+<h1 class="sr">Chili Sweat — Poleras Heat y shorts Sprint en varios colores. Hecho en Chile.</h1>
+
+<div id="art">
+  <div id="about" class="ui dim">Nosotros</div>
+  <img id="logo" class="dim" src="assets/logo-blanco.webp" width="1100" height="313" alt="Chili Sweat — Hecho en Chile" draggable="false">
+  <div id="contact" class="ui dim dimmer">Contacto</div>
+
+  <div id="rail" class="dim"></div>
+  <div id="rack" class="dim"></div>
+
+  <div id="cap" class="dimmer"><b id="capName"></b><span id="capPrice"></span></div>
+  <button id="avail" class="pill ui dim dimmer" type="button">Ver disponibilidad</button>
+
+  <div id="band" class="dimmer"><div id="track"></div></div>
+
+  <div id="det">
+    <div class="hit" id="hit"></div>
+    <div id="big2"></div>
+    <div id="big"></div>
+    <button id="prev" class="arr" type="button" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button id="next" class="arr" type="button" aria-label="Siguiente"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div id="info">
+      <div id="num"></div>
+      <div id="name"></div>
+      <div id="price"></div>
+      <button class="pill ui" type="button">Ver disponibilidad</button>
+    </div>
+    <button id="close" class="ui" type="button">Cerrar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(s){ return document.querySelector(s); };
+  var art = $('#art'), rack = $('#rack'), cap = $('#cap'), body = document.body;
+  var big = $('#big'), big2 = $('#big2');
+
+  /* ---- encaje del artboard 1500x1000 ---- */
+  function fit(){
+    var k = Math.min(innerWidth / 1500, innerHeight / 1000);
+    art.style.transform = 'scale(' + k + ')';
+    art.style.left = (innerWidth - 1500 * k) / 2 + 'px';
+    art.style.top = (innerHeight - 1000 * k) / 2 + 'px';
+  }
+  fit(); addEventListener('resize', fit);
+
+  /* ---- productos: una percha por prenda (nombre, color, precio, imagen) ---- */
+  var POLERA = 'Polera Heat', PRECIO_POLERA = '$19.990';
+  var SHORT = 'Short Sprint', PRECIO_SHORT = '$17.990';
+  var P = [
+    { name: POLERA, color: 'Negro',       price: PRECIO_POLERA, img: 'assets/polera-negro.webp' },
+    { name: SHORT,  color: 'Negro',       price: PRECIO_SHORT,  img: 'assets/short-negro.webp' },
+    { name: POLERA, color: 'Azul marino', price: PRECIO_POLERA, img: 'assets/polera-azul-marino.webp' },
+    { name: SHORT,  color: 'Azul marino', price: PRECIO_SHORT,  img: 'assets/short-azul-marino.webp' },
+    { name: POLERA, color: 'Gris',        price: PRECIO_POLERA, img: 'assets/polera-gris.webp' },
+    { name: SHORT,  color: 'Gris',        price: PRECIO_SHORT,  img: 'assets/short-gris.webp' },
+    { name: POLERA, color: 'Burdeo',      price: PRECIO_POLERA, img: 'assets/polera-burdeo.webp' },
+    { name: POLERA, color: 'Verde',       price: PRECIO_POLERA, img: 'assets/polera-verde.webp' }
+  ];
+  var N = P.length;
+  P.forEach(function(p){ new Image().src = p.img; });
+
+  function paint(el, k){ el.style.backgroundImage = 'url(' + P[k].img + ')'; }
+  function pad2(n){ return (n < 10 ? '0' : '') + n; }
+  function priceLine(k){ return P[k].color + ' · ' + P[k].price; }
+
+  /* ---- riel ---- */
+  var SLOT = 139, OPEN = 60, CX = 750;
+  var hov = -1, open = -1, busy = false;
+  var G = [];
+
+  P.forEach(function(p, k){
+    var g = document.createElement('div');
+    g.className = 'g';
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', p.name + ', ' + p.color + ', ' + p.price);
+    var i = document.createElement('i');
+    g.appendChild(i);
+    rack.appendChild(g);
+    paint(i, k);
+    g.addEventListener('pointerenter', function(){ if (open < 0) { hov = k; layout(); } });
+    g.addEventListener('click', function(){ openG(k); });
+    G.push(g);
+  });
+  rack.addEventListener('pointerleave', function(){ if (open < 0) { hov = -1; layout(); } });
+
+  function layout(){
+    G.forEach(function(g, k){
+      var x = CX + (k - (N - 1) / 2) * SLOT;
+      if (hov >= 0 && k !== hov) x += Math.sign(k - hov) * OPEN;
+      g.style.left = x + 'px';
+      g.classList.toggle('face', k === hov);
+    });
+    if (hov >= 0) {
+      cap.style.left = G[hov].style.left;
+      $('#capName').textContent = P[hov].name;
+      $('#capPrice').textContent = priceLine(hov);
+      cap.classList.add('on');
+    } else cap.classList.remove('on');
+  }
+  layout();
+
+  /* ---- banda ---- */
+  var seq = ['CHILI SWEAT', '•', 'HECHO EN CHILE', '•', 'HECHO PARA SUDAR', '•'], html = '';
+  for (var r = 0; r < 16; r++) seq.forEach(function(t){ html += '<span>' + t + '</span>'; });
+  $('#track').innerHTML = html;
+
+  /* ---- detalle ---- */
+  var EASE = 'cubic-bezier(.2,.8,.2,1)';
+  function fill(k){
+    $('#num').textContent = pad2(k + 1) + ' / ' + pad2(N);
+    $('#name').textContent = P[k].name;
+    $('#price').textContent = priceLine(k);
+  }
+  function cancelAll(el){ el.getAnimations().forEach(function(a){ a.cancel(); }); }
+
+  function openG(k){
+    if (open >= 0 || busy) return;
+    open = k; hov = k; layout();
+    var gx = parseFloat(G[k].style.left);
+    cancelAll(big); paint(big, k); fill(k);
+    body.classList.add('open');
+    big.animate([
+      { transform: 'translate(' + (gx - 750) + 'px,-8px) scale(.61)', opacity: 1 },
+      { transform: 'none', opacity: 1 }
+    ], { duration: 750, easing: EASE, fill: 'forwards' });
+    G[k].style.visibility = 'hidden';
+  }
+
+  function step(d){
+    if (open < 0 || busy) return;
+    var from = open;
+    open = (open + d + N) % N;
+    fill(open);
+    G[from].style.visibility = '';
+    G[open].style.visibility = 'hidden';
+    hov = open; layout();
+
+    paint(big2, from);
+    big2.animate([
+      { transform: 'none', opacity: 1, filter: 'blur(0)' },
+      { transform: 'translateX(' + (-d * 120) + 'px) scale(.94)', opacity: 0, filter: 'blur(6px)' }
+    ], { duration: 600, easing: EASE });
+
+    cancelAll(big); paint(big, open);
+    big.animate([
+      { transform: 'translateX(' + (d * 120) + 'px) scale(.94)', opacity: 0, filter: 'blur(6px)' },
+      { transform: 'none', opacity: 1, filter: 'blur(0)' }
+    ], { duration: 600, easing: EASE, fill: 'forwards' });
+  }
+
+  function closeG(){
+    if (open < 0 || busy) return;
+    busy = true;
+    var k = open, gx = parseFloat(G[k].style.left);
+    big.animate([
+      { transform: 'none', opacity: 1 },
+      { transform: 'translate(' + (gx - 750) + 'px,-8px) scale(.61)', opacity: 1 }
+    ], { duration: 650, easing: EASE, fill: 'forwards' });
+    body.classList.remove('open');
+    setTimeout(function(){
+      G[k].style.visibility = '';
+      cancelAll(big);
+      big.style.opacity = '0';
+      open = -1; hov = -1; busy = false;
+      layout();
+    }, 650);
+  }
+
+  $('#prev').addEventListener('click', function(){ step(-1); });
+  $('#next').addEventListener('click', function(){ step(1); });
+  $('#close').addEventListener('click', closeG);
+  $('#hit').addEventListener('click', closeG);
+
+  /* ---- teclado ---- */
+  addEventListener('keydown', function(e){
+    if (open >= 0) {
+      if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'Escape') closeG();
+    } else {
+      if (e.key === 'ArrowRight') { hov = Math.min(N - 1, hov + 1); layout(); }
+      else if (e.key === 'ArrowLeft') { hov = hov < 0 ? N - 1 : Math.max(0, hov - 1); layout(); }
+      else if (e.key === 'Enter' && hov >= 0) openG(hov);
+    }
+  });
+
+  window.__closet = { openG: openG, step: step, closeG: closeG, setHov: function(k){ hov = k; layout(); } };
+})();
+</script>
+</body>
+</html>
